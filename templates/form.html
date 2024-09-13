@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Price Prediction</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 550px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+
+        select {
+            width: 105%; /* Slightly wider */
+        }
+
+        input:focus, select:focus {
+            border-color: #3c3c3c;
+        }
+
+        button {
+            width: 105%; /* Slightly wider */
+            padding: 12px;
+            background-color: #3c3c3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #5a5a5a;
+        }
+
+        .result {
+            text-align: center;
+            background-color: #e6ffe6;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            color: #2c6a2c;
+        }
+
+        .spinner {
+            display: none;
+            margin: 0 auto;
+            width: 50px;
+            height: 50px;
+            border: 6px solid #ccc;
+            border-radius: 50%;
+            border-top-color: #333;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Real Estate Price Prediction</h2>
+        <form id="priceForm" method="POST" onsubmit="showLoader()">
+            <label for="location">Location</label>
+            <select name="location" id="location" required>
+                <option value="">Select Location</option>
+                {% for location in locations %}
+                <option value="{{ location }}" {% if location == request.form.get('location') %}selected{% endif %}>{{ location }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="area">Area (sq ft)</label>
+            <input type="number" id="area" name="area" placeholder="Enter Area" value="{{ request.form.get('area', '') }}" required>
+
+            <label for="bedrooms">Bedrooms</label>
+            <input type="number" id="bedrooms" name="bedrooms" placeholder="Enter Bedrooms" value="{{ request.form.get('bedrooms', '') }}" required>
+
+            <label for="baths">Baths</label>
+            <input type="number" id="baths" name="baths" placeholder="Enter Baths" value="{{ request.form.get('baths', '') }}" required>
+
+            <button type="submit">Predict Price</button>
+        </form>
+
+        <div class="spinner" id="spinner"></div>
+
+        {% if predicted_price %}
+        <div class="result">
+            Predicted Price: PKR {{ predicted_price | round(2) }}
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        function showLoader() {
+            document.getElementById('spinner').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
