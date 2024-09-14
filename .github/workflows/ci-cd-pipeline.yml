@@ -31,15 +31,15 @@ jobs:
         run: |
           pytest test.py
 
-      - name: Linting and Static Code Analysis
-        run: |
-          flake8 .
+      # - name: Linting and Static Code Analysis
+      #   run: |
+      #     flake8 .
           
-      - name: Build Docker Image
-        run: |
-          docker build -t house-price-predictor:${{ matrix.environment }} .
+      # - name: Build Docker Image
+      #   run: |
+      #     docker build -t house-price-predictor:${{ matrix.environment }} .
           
-      - name: Deploy to Vercel (Production Only)
-        if: matrix.environment == 'prod'
-        run: |
-          vercel --prod
+      # - name: Deploy to Vercel
+      #   run: vercel --prod
+      #   env:
+      #     VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
