@@ -39,19 +39,20 @@ We trained a house price prediction model using a real-world dataset from [Kaggl
 
 ### Features:
 - **Data Preprocessing**: Missing value handling, feature scaling.
-- **Model**: Random Forest Regressor (or any other model used).
+- **Model**: Gradient Boosting model.
 - **Evaluation**: RMSE, R² metrics to ensure model performance.
 
 ## API Integration
 
-The trained model is exposed through a Flask API. The `/predict` endpoint accepts house-related data (e.g., area, number of bedrooms) via POST requests and returns the predicted house price.
+The trained model is exposed through a Flask API. The `/predict` endpoint accepts house-related data via POST requests and returns the predicted house price.
 
 ### Example API Request:
 ```bash
 POST /predict
 {
-    "area": 1200,
-    "bedrooms": 3,
-    "bathrooms": 2,
-    "location": "Suburb"
+    "location": "F-8",
+    "area": 2000,
+    "bedrooms": 4,
+    "baths": 3
 }
+
